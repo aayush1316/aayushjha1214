@@ -66,4 +66,7 @@
     });
   
   })(jQuery); // End of use strict
+ document.getElementById('page-top').onload=function(){
+    alert("Still under-construction");
+  }
   
