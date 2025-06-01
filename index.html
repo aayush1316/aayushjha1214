@@ -1,397 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>AAYUSH JHA</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    </head>
-
-    <body id="page-top" style="background-image:url('css/demo-1-bg.jpg');">
-
-       <!---CANNVAS-->
-       <div id="large-header" class="large-header" style="position: relative;
-       width:100%;
-       background: #333;
-       overflow: hidden;
-       background-size: cover;
-       background-position: center center;
-       z-index: 1;">
-        <canvas id="demo-canvas" style="background-image: url('css/demo-1-bg.jpg');"></canvas>
-          <h1 class="main-title" style="position: absolute;
-          margin: 0;
-          padding: 0;
-          color: #f9f1e9;
-          text-align: center;
-          top: 10%;
-          left: 50%;
-          -webkit-transform: translate3d(-50%,-50%,0);
-          transform: translate3d(-50%,-50%,0);"> <span class="thin"></span></h1>
-           <nav class="navbar navbar-expand-lg  text-uppercase fixed-top" id="mainNav">
-            <div class="container">
-               <button type="button" class="btn btn-success" id="cv" onclick="cv()" class="text-right">Download CV</button>
-
-                <a class="navbar-brand js-scroll-trigger" href="Aayush-Jha_cv.pdf"><br>AAYUSH JHA</a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-      </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-      <script>
-          function cv(){
-              location.replace("aayushjha.pdf");
-          }
-        </script>
-
-      <script>
-          (function() {
-
-var width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
-
-// Main
-initHeader();
-initAnimation();
-addListeners();
-
-function initHeader() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    target = {x: width/2, y: height/2};
-
-    largeHeader = document.getElementById('large-header');
-    largeHeader.style.height = height+'px';
-
-    canvas = document.getElementById('demo-canvas');
-    canvas.width = width;
-    canvas.height = height;
-    ctx = canvas.getContext('2d');
-
-    // create points
-    points = [];
-    for(var x = 0; x < width; x = x + width/20) {
-        for(var y = 0; y < height; y = y + height/20) {
-            var px = x + Math.random()*width/20;
-            var py = y + Math.random()*height/20;
-            var p = {x: px, originX: px, y: py, originY: py };
-            points.push(p);
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aayush Jha | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
-    }
-
-    // for each point find the 5 closest points
-    for(var i = 0; i < points.length; i++) {
-        var closest = [];
-        var p1 = points[i];
-        for(var j = 0; j < points.length; j++) {
-            var p2 = points[j]
-            if(!(p1 == p2)) {
-                var placed = false;
-                for(var k = 0; k < 5; k++) {
-                    if(!placed) {
-                        if(closest[k] == undefined) {
-                            closest[k] = p2;
-                            placed = true;
-                        }
-                    }
-                }
-
-                for(var k = 0; k < 5; k++) {
-                    if(!placed) {
-                        if(getDistance(p1, p2) < getDistance(p1, closest[k])) {
-                            closest[k] = p2;
-                            placed = true;
-                        }
-                    }
-                }
-            }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
         }
-        p1.closest = closest;
-    }
-
-    // assign a circle to each point
-    for(var i in points) {
-        var c = new Circle(points[i], 2+Math.random()*2, 'rgba(255,255,255,0.3)');
-        points[i].circle = c;
-    }
-}
-
-// Event handling
-function addListeners() {
-    if(!('ontouchstart' in window)) {
-        window.addEventListener('mousemove', mouseMove);
-    }
-    window.addEventListener('scroll', scrollCheck);
-    window.addEventListener('resize', resize);
-}
-
-function mouseMove(e) {
-    var posx = posy = 0;
-    if (e.pageX || e.pageY) {
-        posx = e.pageX;
-        posy = e.pageY;
-    }
-    else if (e.clientX || e.clientY)    {
-        posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    target.x = posx;
-    target.y = posy;
-}
-
-function scrollCheck() {
-    if(document.body.scrollTop > height) animateHeader = false;
-    else animateHeader = true;
-}
-
-function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    largeHeader.style.height = height+'px';
-    canvas.width = width;
-    canvas.height = height;
-}
-
-// animation
-function initAnimation() {
-    animate();
-    for(var i in points) {
-        shiftPoint(points[i]);
-    }
-}
-
-function animate() {
-    if(animateHeader) {
-        ctx.clearRect(0,0,width,height);
-        for(var i in points) {
-            // detect points in range
-            if(Math.abs(getDistance(target, points[i])) < 4000) {
-                points[i].active = 0.3;
-                points[i].circle.active = 0.6;
-            } else if(Math.abs(getDistance(target, points[i])) < 20000) {
-                points[i].active = 0.1;
-                points[i].circle.active = 0.3;
-            } else if(Math.abs(getDistance(target, points[i])) < 40000) {
-                points[i].active = 0.02;
-                points[i].circle.active = 0.1;
-            } else {
-                points[i].active = 0;
-                points[i].circle.active = 0;
-            }
-
-            drawLines(points[i]);
-            points[i].circle.draw();
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-    }
-    requestAnimationFrame(animate);
-}
-
-function shiftPoint(p) {
-    TweenLite.to(p, 1+1*Math.random(), {x:p.originX-50+Math.random()*100,
-        y: p.originY-50+Math.random()*100, ease:Circ.easeInOut,
-        onComplete: function() {
-            shiftPoint(p);
-        }});
-}
-
-// Canvas manipulation
-function drawLines(p) {
-    if(!p.active) return;
-    for(var i in p.closest) {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p.closest[i].x, p.closest[i].y);
-        ctx.strokeStyle = 'rgba(156,217,249,'+ p.active+')';
-        ctx.stroke();
-    }
-}
-
-function Circle(pos,rad,color) {
-    var _this = this;
-
-    // constructor
-    (function() {
-        _this.pos = pos || null;
-        _this.radius = rad || null;
-        _this.color = color || null;
-    })();
-
-    this.draw = function() {
-        if(!_this.active) return;
-        ctx.beginPath();
-        ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = 'rgba(156,217,249,'+ _this.active+')';
-        ctx.fill();
-    };
-}
-
-// Util
-function getDistance(p1, p2) {
-    return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
-}
-
-})();
-      </script>
-        <!-- Navigation-->
-       
-        <!-- Masthead-->
-        <header class="masthead  text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="" alt="" />
-                <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">AAYUSH JHA</h1>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #6e8efb;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #6e8efb;
+        }
+        
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #6e8efb;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-bold text-gray-800">AAYUSH JHA</a>
                 </div>
-                <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-thin mb-0">Electrical Engineering Student</p>
-            </div>
-        </header>
-
-        <!-- About Section-->
-        <section class="page-section text-white mb-0" id="about">
-            <div class="container">
-                <!-- About Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-indigo-600">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-indigo-600">About</a>
+                    <a href="#experience" class="nav-link text-gray-700 hover:text-indigo-600">Experience</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-indigo-600">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-indigo-600">Contact</a>
                 </div>
-                <!-- About Section Content-->
-                <div class="row">
-                    <div class="col-lg-4 ml-auto"><p class="lead">Hello I am Aayush Jha.Electrical Engineering Student</p></div>
-                    <div class="col-lg-4 mr-auto"><p class="lead">Thank you for visiting my personal website.</p></div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-gray-700">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </section>
-        <!-- Contact Section-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-orange mb-0">Contact Me</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Form-->
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Name</label>
-                                    <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Email Address</label>
-                                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Phone Number</label>
-                                    <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Message</label>
-                                    <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Please enter a message."></textarea>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <br />
-                            <div id="success"></div>
-                            <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Send</button></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer text-center">
-            <div class="container">
-                <div class="row">
-                    <!-- Footer Location-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Location</h4>
-                        <p class="lead mb-0">
-                           Kathmandu-32,Nepal
-                            <br />
-                           
-                        </p>
-                    </div>
-                    <!-- Footer Social Icons-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Around the Web</h4>
-                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/aayush.jha.52035"><i class="fab fa-fw fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/AayushJ27605327"><i class="fab fa-fw fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/aayush-jha-ab64101a6/"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                    </div>
-                    <!-- Footer About Text-->
-                    <div class="col-lg-4">
-                        <h4 class="text-uppercase mb-4">About Me</h4>
-                        <p class="lead mb-0">
-                            I love electronic circuits and coding.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Copyright Section-->
-        <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>Copyright © Aayush Jha 2021</small></div>
         </div>
-        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-        <div class="scroll-to-top d-lg-none position-fixed">
-            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
-    </div>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4 px-4 shadow-lg">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-indigo-600">Home</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-indigo-600">About</a>
+            <a href="#experience" class="block py-2 text-gray-700 hover:text-indigo-600">Experience</a>
+            <a href="#projects" class="block py-2 text-gray-700 hover:text-indigo-600">Projects</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-indigo-600">Contact</a>
+        </div>
+    </nav>
 
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="assets/mail/jqBootstrapValidation.js"></script>
-        <script src="assets/mail/contact_me.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Hi, I'm Aayush Jha</h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">Electrical Engineer & Developer</h2>
+                    <p class="text-lg mb-8">Passionate about power systems, IoT, and machine learning applications in electrical engineering.</p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300">Contact Me</a>
+                        <a href="#projects" class="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-indigo-600 transition duration-300">View Projects</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                        <img src="src/IMG_9715.jpg" alt="Aayush Jha" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">About Me</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3 bg-gray-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Personal Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3 text-indigo-600"></i>
+                            <span>+977-9814838898</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-indigo-600"></i>
+                            <span>aayushjha1214@gmail.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-indigo-600"></i>
+                            <span>Kathmandu, Nepal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-globe mt-1 mr-3 text-indigo-600"></i>
+                            <span>www.aayushjha.com.np</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Connect With Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/aayush1316" target="_blank" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/aayush-jha-ab64101a6/" target="_blank" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-500 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-2/3">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Education</h3>
+                    
+                    <div class="relative pl-8 mb-8 timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                            <h4 class="font-bold text-lg text-gray-800">Bachelor of Engineering in Electrical Engineering</h4>
+                            <p class="text-indigo-600 mb-2">April 2022 - Running</p>
+                            <p class="mb-2">Pulchowk Campus, Institute of Engineering, Tribhuvan University</p>
+                            <p class="mb-2">Academic Supervisor: Dr. Basanta Kumar Gautam, Ph.D.</p>
+                            <p>Capstone Project: Optimizing Power Grid Resilience with Machine Learning based Risk Assessment</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative pl-8 timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                            <h4 class="font-bold text-lg text-gray-800">High School</h4>
+                            <p class="text-indigo-600 mb-2">June 2018 - June 2020</p>
+                            <p class="mb-2">Model Higher Secondary School, Janakpur</p>
+                            <p>Aggregate GPA: 3.56</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Technical Skills</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium mb-2">Electrical Software</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">Programming Languages</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">Machine Learning</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">Web Development</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">My Experience</h2>
+            
+            <div class="space-y-8">
+                <div class="relative pl-8 timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="font-bold text-xl text-gray-800">Event Manager</h3>
+                        <p class="text-indigo-600 mb-2">March 2023 – May 2024 | PDSC Pulchowk Campus, Lalitpur</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Organized Orientation Program</li>
+                            <li>Organized ETABS Workshop for 4th year Civil Engineering Students</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="font-bold text-xl text-gray-800">Tutor (Hardware Fellowship)</h3>
+                        <p class="text-indigo-600 mb-2">July 2024 (7 days) | Locus Pulchowk Campus, Lalitpur</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Worked as Tutor in the Hardware Fellowship conducted by the LOCUS 2024</li>
+                            <li>Taught about basics of electronics</li>
+                            <li>Taught Arduino Programming</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="font-bold text-xl text-gray-800">Hardware Intern</h3>
+                        <p class="text-indigo-600 mb-2">January 2022 – April 2022 | National Innovation Center, Kritipur, Kathmandu</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Researched on product development of Heart</li>
+                            <li>Created a source code for the Heart Project</li>
+                            <li>Designed the product in matrix board</li>
+                            <li>Created an embedded system of the Heart, an educational tool for visually understanding how the heart functions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="font-bold text-xl text-gray-800">Energy Hackathons</h3>
+                        <p class="text-indigo-600 mb-2">Locus Pulchowk Campus, Lalitpur</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Participated and reached the final round of 2 Energy Hackathons organized by Locus</li>
+                            <li>2023: Smart Bijuli (Demand Side Management)</li>
+                            <li>2024: Power Factor Improvement Device (Energy Efficiency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-gray-50 rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Smart Meter using IoT" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Smart Meter using IoT</h3>
+                        <p class="text-gray-600 mb-4">Real-time monitoring of household appliances with digital meter readings</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li>Used traditional Meter and made it digital</li>
+                            <li>Shows reading in custom built website using node Js, Arduino</li>
+                            <li>Presented in LOCUS 2023 exhibition</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">IoT</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Node.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Arduino</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-gray-50 rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1625014618427-fbc980b974f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Power Factor Improvement Device" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Power Factor Improvement Device</h3>
+                        <p class="text-gray-600 mb-4">Automatically improves power factor for industries and commercial buildings</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li>Uses capacitor banks to improve power factor</li>
+                            <li>Developed website to remotely operate capacitor connection</li>
+                            <li>Admin login page built using Node Js and React JS</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Energy Efficiency</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Node.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">React</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-gray-50 rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a5161e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80" alt="RoboPoP" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">RoboPoP</h3>
+                        <p class="text-gray-600 mb-4">Competition robot controlled via WiFi app</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li>Developed for competition organized by LOCUS 2024</li>
+                            <li>Uses Nodemcu and Motor Driver</li>
+                            <li>Controlled through an app via WiFi</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Robotics</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">IoT</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Embedded Systems</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card bg-gray-50 rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="Heart Project" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Heart Project</h3>
+                        <p class="text-gray-600 mb-4">Educational tool for visually understanding heart functions</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li>Created during internship at National Innovation Center</li>
+                            <li>Designed product in matrix board</li>
+                            <li>Embedded system demonstrating heart functions</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Embedded Systems</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Hardware</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Educational Tool</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card bg-gray-50 rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Power Grid Resilience" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Optimizing Power Grid Resilience</h3>
+                        <p class="text-gray-600 mb-4">Machine Learning based Risk Assessment</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li>Study of Transient Stability of Generator</li>
+                            <li>Analysis during normal conditions and earthquakes</li>
+                            <li>Used Principle Component Analysis with Matlab</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Machine Learning</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Power Systems</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Matlab</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Award -->
+                <div class="project-card bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl overflow-hidden shadow-md transition duration-300 text-white">
+                    <div class="h-full flex flex-col justify-between p-6">
+                        <div>
+                            <div class="flex justify-center mb-4">
+                                <i class="fas fa-trophy text-4xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-center">People's Choice Award</h3>
+                            <p class="text-center mb-4">LOCUS 2023</p>
+                            <p class="text-sm text-center">Won People's Choice Award in LOCUS-2023 with my team for the project: Smart Meter using IoT</p>
+                        </div>
+                        <div class="flex justify-center mt-4">
+                            <i class="fas fa-award text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Phone</h4>
+                                <p class="text-gray-600">+977-9814838898</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Email</h4>
+                                <p class="text-gray-600">aayushjha1214@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Address</h4>
+                                <p class="text-gray-600">Kathmandu, Nepal</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/aayush1316" target="_blank" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/aayush-jha-ab64101a6/" target="_blank" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-500 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="www.aayushjha.com.np" target="_blank" class="bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-500 transition duration-300">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800">Send Me a Message</h3>
+                    
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">AAYUSH JHA</h3>
+                    <p class="text-gray-400">Electrical Engineer & Developer</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a>
+                    <a href="#about" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#experience" class="text-gray-400 hover:text-white transition duration-300">Experience</a>
+                    <a href="#projects" class="text-gray-400 hover:text-white transition duration-300">Projects</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+                <p>&copy; 2024 Aayush Jha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been received. I'll get back to you soon.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        // Animate skill bars on scroll
+        window.addEventListener('scroll', function() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            const skillsSection = document.getElementById('about');
+            
+            const skillsSectionTop = skillsSection.offsetTop;
+            const skillsSectionHeight = skillsSection.offsetHeight;
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition > skillsSectionTop - 500 && scrollPosition < skillsSectionTop + skillsSectionHeight) {
+                skillBars.forEach(bar => {
+                    bar.style.width = bar.parentElement.getAttribute('data-width') || '0%';
+                });
+            }
+        });
+        
+        // Set initial width for skill bars (will be animated on scroll)
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                bar.parentElement.setAttribute('data-width', width);
+            });
+        });
+    </script>
+</body>
 </html>
